@@ -274,9 +274,9 @@ if not require_auth():
         st.markdown("<div style='height: 10vh;'></div>", unsafe_allow_html=True)
         with st.container():
             st.markdown(f"""
-            <div class="glass" style="padding: 3rem; text-align: center;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, {t['accent']}, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Agentic Builder</h1>
-                <p style="color: {t['text2']}; font-size: 1.1rem; margin-bottom: 2rem;">AI-powered website generation platform</p>
+            <div class=\"glass\" style=\"padding: 3rem; text-align: center;\">
+                <h1 style=\"font-size: 2.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, {t['accent']}, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Agentic Builder</h1>
+                <p style=\"color: {t['text2']}; font-size: 1.1rem; margin-bottom: 2rem;\">AI-powered website generation platform</p>
             </div>
             """, unsafe_allow_html=True)
 
@@ -311,9 +311,9 @@ if not require_auth():
 
 with st.sidebar:
     st.markdown(f"""
-    <div style="padding: 1rem 0;">
-        <p style="font-weight: 700; font-size: 1.1rem; margin: 0;">{st.session_state.user.get('display_name', 'User')}</p>
-        <p style="color: {t['text2']}; font-size: 0.8rem; margin: 0;">{st.session_state.user['email']}</p>
+    <div style=\"padding: 1rem 0;\">
+        <p style=\"font-weight: 700; font-size: 1.1rem; margin: 0;\">{st.session_state.user.get('display_name', 'User')}</p>
+        <p style=\"color: {t['text2']}; font-size: 0.8rem; margin: 0;\">{st.session_state.user['email']}</p>
     </div>
     """, unsafe_allow_html=True)
     st.divider()
@@ -324,21 +324,19 @@ with st.sidebar:
 
     st.divider()
 
-    pages = {
-        "Workspace": st.Page("pages/0_Workspace.py", title="Workspace", default=True),
-        "Projects": st.Page("pages/1_Projects.py", title="Projects"),
-        "Providers": st.Page("pages/2_Providers.py", title="Providers"),
-        "Prompts": st.Page("pages/3_Prompts.py", title="Prompts"),
-        "Templates": st.Page("pages/4_Templates.py", title="Templates"),
-        "Settings": st.Page("pages/5_Settings.py", title="Settings"),
-        "Runtime": st.Page("pages/6_Runtime.py", title="Runtime"),
-        "Versions": st.Page("pages/7_Versions.py", title="Versions"),
-        "MCP": st.Page("pages/8_MCP.py", title="MCP Connectors"),
-    }
-    pg = st.navigation(pages, position="sidebar")
-
-    st.divider()
     if st.button("Logout", use_container_width=True):
         logout()
 
+pages = [
+    st.Page("pages/0_Workspace.py", title="Workspace", icon="🏠", default=True),
+    st.Page("pages/1_Projects.py", title="Projects", icon="📁"),
+    st.Page("pages/2_Providers.py", title="Providers", icon="🔌"),
+    st.Page("pages/3_Prompts.py", title="Prompts", icon="💬"),
+    st.Page("pages/4_Templates.py", title="Templates", icon="📄"),
+    st.Page("pages/5_Settings.py", title="Settings", icon="⚙️"),
+    st.Page("pages/6_Runtime.py", title="Runtime", icon="⚡"),
+    st.Page("pages/7_Versions.py", title="Versions", icon="🕒"),
+    st.Page("pages/8_MCP.py", title="MCP Connectors", icon="🔗"),
+]
+pg = st.navigation(pages, position="sidebar")
 pg.run()
