@@ -10,6 +10,17 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-def init_db():
-    from core import models  # noqa
+@event.listens_for(engine, "connect")
+def _set_sqlite_pragma(dbapi_conn, connection_record):
+    if "sqlite" in settings.DATABASE_URL:
+        cursor = dbapi_conn.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
+
+
+def init_db(force_reset: bool = True):
+    """Create tables. force_reset=True drops existing tables first (dev only)."""
+    from core import models  # noqa: F401
+    if force_reset and "sqlite" in settings.DATABASE_URL:
+        Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
